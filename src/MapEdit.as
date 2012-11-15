@@ -1,12 +1,13 @@
 package  
 {
 	import flash.display.Sprite;
+	import mx.core.UIComponent;
 	
 	/**
 	 * ...
 	 * @author xiaohan
 	 */
-	public class MapEdit extends Sprite 
+	public class MapEdit extends UIComponent 
 	{
 		private var _godFightServerContext : MapEditContext;
 

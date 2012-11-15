@@ -1,0 +1,30 @@
+package me.xplabs.menu.controller 
+{
+	import me.xplabs.menu.view.NewMapView;
+	import me.xplabs.menu.view.NewMapViewMediator;
+	import org.robotlegs.mvcs.Command;
+	
+	/**
+	 * ...
+	 * @author xiaohan
+	 */
+	public class NewMapCommand extends Command 
+	{
+		
+		public function NewMapCommand() 
+		{
+			super();
+			
+		}
+		override public function execute():void 
+		{
+			super.execute();
+			
+			if (!mediatorMap.hasMapping(NewMapView)) mediatorMap.mapView(NewMapView, NewMapViewMediator);
+			contextView.addChild(new NewMapView());
+			
+		}
+		
+	}
+
+}

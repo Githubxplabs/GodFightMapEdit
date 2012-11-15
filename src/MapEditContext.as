@@ -1,6 +1,8 @@
 package  
 {
 	import flash.display.DisplayObjectContainer;
+	import me.xplabs.StartupCommand;
+	import org.robotlegs.base.ContextEvent;
 	import org.robotlegs.mvcs.Context;
 	
 	/**
@@ -18,9 +20,9 @@ package
 		
 		override public function startup():void 
 		{
+			
+			commandMap.mapEvent(ContextEvent.STARTUP_COMPLETE, StartupCommand, ContextEvent);
 			super.startup();
-			
-			
 			
 		}
 	}
