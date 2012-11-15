@@ -94,6 +94,15 @@ package me.xplabs.menu.view
 			_ensureBtn.addEventListener(MouseEvent.CLICK, ensureEnterHandler);
 			
 		}
+		public function get uiW():Number
+		{
+			return _tiltleWindow.width;
+		}
+		public function get uiH():Number
+		{
+			return _tiltleWindow.height;
+		}
+		
 		
 		private function ensureEnterHandler(e:MouseEvent):void 
 		{
