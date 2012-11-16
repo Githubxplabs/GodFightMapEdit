@@ -3,8 +3,7 @@ package me.xplabs.menu.events
 	import flash.events.Event;
 	
 	/**
-	 * 事件类型参见MenuType.as
-	 * ...
+	 * 事件类型
 	 * @author xiaohan
 	 */
 	public class MapMenuEvent extends Event 
@@ -33,6 +32,10 @@ package me.xplabs.menu.events
 		 * 导出网格
 		 */
 		public static const EXPORT_GRID:String = "MapMenuEvent.EXPORT_GRID";
+		/**
+		 * 关闭编辑的地图
+		 */
+		public static const CLOSE_MAP:String = "MapMenuEvent.CLOSE_MAP";
 		
 		/**
 		 * 显示网格

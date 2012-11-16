@@ -1,6 +1,7 @@
 package me.xplabs.edit.view 
 {
 	import mx.containers.Panel;
+	import mx.containers.TitleWindow;
 	import mx.core.UIComponent;
 	
 	/**
@@ -10,7 +11,8 @@ package me.xplabs.edit.view
 	 */
 	public class EditAreaView extends UIComponent
 	{
-		private var _bgPanel:Panel;
+		//private var _bgPanel:Panel;
+		private var _titleWindow:TitleWindow;
 		
 		public function EditAreaView() 
 		{
@@ -19,12 +21,22 @@ package me.xplabs.edit.view
 		
 		private function init():void 
 		{
-			_bgPanel = new Panel();
-			_bgPanel.width = 600;
-			_bgPanel.height = 560;
-			addChild(_bgPanel);
+			//_bgPanel = new Panel();
+			//_bgPanel.width = 800;
+			//_bgPanel.height = 550;
+			//_bgPanel.title = "编辑区域";
+			//addChild(_bgPanel);
+			_titleWindow = new TitleWindow();
+			_titleWindow.width = 800;
+			_titleWindow.height = 550;
+			_titleWindow.title = "编辑区域";
+			addChild(_titleWindow);
 		}
 		
+		public function dispose():void
+		{
+			
+		}
 	}
 
 }

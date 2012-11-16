@@ -31,7 +31,7 @@ package me.xplabs.menu.view
 			clickCloseHandler();
 		}
 		
-		private function clickCloseHandler():void 
+		private function clickCloseHandler(p:NewMapEvent = null):void 
 		{
 			if (newMapView.parent) newMapView.parent.removeChild(newMapView);
 		}

@@ -42,6 +42,7 @@ package me.xplabs.menu.view
                         <menuitem label="导出地图" data="1D"/>
                         <menuitem label="导入背景" data="1E"/>
                         <menuitem label="导出网格" data="1F"/>
+                        <menuitem label="关闭地图" data="1G"/>
                     </menuitem>
 					<menuitem label="视图" data="top2">
                         <menuitem label="显示网格" data="2A"/>
@@ -84,6 +85,9 @@ package me.xplabs.menu.view
 					break;
 				case "1F":
 					tempType = MapMenuEvent.EXPORT_GRID;
+					break;
+				case "1G":
+					tempType = MapMenuEvent.CLOSE_MAP;
 					break;
 				case "2A":
 					tempType = MapMenuEvent.SHOW_GRID;

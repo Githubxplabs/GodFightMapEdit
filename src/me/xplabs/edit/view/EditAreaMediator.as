@@ -1,5 +1,6 @@
 package me.xplabs.edit.view 
 {
+	import me.xplabs.edit.events.EditEvent;
 	import org.robotlegs.mvcs.Mediator;
 	
 	/**
@@ -8,7 +9,8 @@ package me.xplabs.edit.view
 	 */
 	public class EditAreaMediator extends Mediator 
 	{
-		
+		[Inject]
+		public var editAreaView:EditAreaView;
 		public function EditAreaMediator() 
 		{
 			
@@ -17,6 +19,23 @@ package me.xplabs.edit.view
 		override public function onRegister():void 
 		{
 			super.onRegister();
+			
+			editAreaView.x = 0;
+			editAreaView.y = 20;
+			
+			addContextListener(EditEvent.CLOSE_EDIT_MAP, closeMapHandler, EditEvent);
+		}
+		
+		private function closeMapHandler(e:EditEvent):void 
+		{
+			if (editAreaView.parent) editAreaView.parent.removeChild(editAreaView);
+		}
+		override public function onRemove():void 
+		{
+			super.onRemove();
+			editAreaView.dispose();
+			removeContextListener(EditEvent.CLOSE_EDIT_MAP, closeMapHandler, EditEvent);
+			editAreaView = null;
 		}
 	}
 
