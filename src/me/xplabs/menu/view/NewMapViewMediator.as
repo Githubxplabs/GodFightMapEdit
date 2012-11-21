@@ -25,9 +25,13 @@ package me.xplabs.menu.view
 			newMapView.clickEnsure = clickEnsureHandler;
 		}
 		
-		private function clickEnsureHandler():void 
+		private function clickEnsureHandler(pw:int, ph:int):void 
 		{
-			dispatch(new NewMapEvent(NewMapEvent.ENTER_NEW_MAP));
+			
+			var tempEvent:NewMapEvent = new NewMapEvent(NewMapEvent.ENTER_NEW_MAP);
+			tempEvent.mapW = pw;
+			tempEvent.mapH = ph;
+			dispatch(tempEvent);
 			clickCloseHandler();
 		}
 		

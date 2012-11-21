@@ -22,6 +22,14 @@ package me.xplabs.constant
 		 * 舞台的中心点y
 		 */
 		public static const stageCenterY:int = stageH * .5;
+		/**
+		 * 格子方块的宽度
+		 */
+		public static const tileW:int = 64;
+		/**
+		 * 格子方块的高度
+		 */
+		public static const tileH:int = 32;
 	}
 
 }

@@ -1,6 +1,7 @@
 package me.xplabs.edit.view 
 {
 	import me.xplabs.edit.events.EditEvent;
+	import me.xplabs.edit.events.MapResizeEvent;
 	import org.robotlegs.mvcs.Mediator;
 	
 	/**
@@ -24,6 +25,12 @@ package me.xplabs.edit.view
 			editAreaView.y = 20;
 			
 			addContextListener(EditEvent.CLOSE_EDIT_MAP, closeMapHandler, EditEvent);
+			addContextListener(MapResizeEvent.UPDATE_RESIZE, updateResizeHandler);
+		}
+		
+		private function updateResizeHandler(e:MapResizeEvent):void 
+		{
+			editAreaView.setWH(e.stageW - 200, e.stageH - 50);
 		}
 		
 		private function closeMapHandler(e:EditEvent):void 

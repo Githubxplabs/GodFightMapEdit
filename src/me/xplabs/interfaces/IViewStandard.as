@@ -1,4 +1,4 @@
-package me.xplabs.interface 
+package me.xplabs.interfaces
 {
 	
 	/**

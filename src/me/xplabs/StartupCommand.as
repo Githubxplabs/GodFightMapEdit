@@ -2,6 +2,8 @@ package me.xplabs
 {
 	import me.xplabs.edit.controller.EditAreaCommand;
 	import me.xplabs.edit.controller.ElementsControlCommand;
+	import me.xplabs.edit.controller.GridCommand;
+	import me.xplabs.edit.events.GridEvent;
 	import me.xplabs.edit.view.EditAreaMediator;
 	import me.xplabs.edit.view.EditAreaView;
 	import me.xplabs.menu.controller.NewMapCommand;
@@ -34,6 +36,7 @@ package me.xplabs
 			commandMap.mapEvent(MapMenuEvent.NEW_MAP, NewMapCommand, MapMenuEvent);
 			commandMap.mapEvent(NewMapEvent.ENTER_NEW_MAP, EditAreaCommand, NewMapEvent);
 			commandMap.mapEvent(NewMapEvent.ENTER_NEW_MAP, ElementsControlCommand, NewMapEvent);
+			commandMap.mapEvent(GridEvent.CREAT_GRID, GridCommand, GridEvent);
 			
 		}
 		

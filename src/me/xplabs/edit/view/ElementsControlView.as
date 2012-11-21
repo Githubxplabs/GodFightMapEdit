@@ -3,6 +3,7 @@ package me.xplabs.edit.view
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
 	import flash.events.MouseEvent;
+	import me.xplabs.interfaces.IViewStandard;
 	import mx.collections.ArrayCollection;
 	import mx.collections.ArrayList;
 	import mx.collections.XMLListCollection;
@@ -20,7 +21,7 @@ package me.xplabs.edit.view
 	 * ...
 	 * @author xiaohan
 	 */
-	public class ElementsControlView extends UIComponent 
+	public class ElementsControlView extends UIComponent implements IViewStandard
 	{
 		private var _previewIcon:PreviewIcon;
 		private var _dropDownList:DropDownList;
@@ -88,6 +89,19 @@ package me.xplabs.edit.view
 			_tileGroup.addEventListener(MouseEvent.MOUSE_MOVE, tileMouseMoveHandler);
 			
 			
+		}
+		
+		/* INTERFACE me.xplabs.interfaces.IViewStandard */
+		
+		public function setWH(pw:int, ph:int):void 
+		{
+			
+		}
+		
+		public function setXY(px:int, py:int):void 
+		{
+			if (px != -1) this.x = px;
+			if (py != -1) this.y = py;
 		}
 		
 		private function dropDownListChangeHandler(e:IndexChangeEvent):void 

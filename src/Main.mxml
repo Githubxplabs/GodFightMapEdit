@@ -5,12 +5,23 @@
 					   width="1000" height="600">
 	<fx:Script>
 		<![CDATA[
+			import flash.events.Event;
+			import flash.geom.Point;
+			import me.xplabs.isometric.utils.Isometric;
 			import mx.events.FlexEvent;
 
 			protected function windowedapplication1_applicationCompleteHandler(event : FlexEvent) : void {
 				// TODO Auto-generated method stub
 
 				uiComponent.addChild(new MapEdit());
+				
+				
+				/*var gridView:GridView = new GridView();
+				uiComponent.addChild(gridView);
+				gridView.x = 100;
+				gridView.y = 100;*/
+				
+				
 			}
 		]]>
 	</fx:Script>

@@ -1,5 +1,6 @@
 package me.xplabs.edit.view 
 {
+	import me.xplabs.edit.events.MapResizeEvent;
 	import org.robotlegs.mvcs.Mediator;
 	
 	/**
@@ -22,6 +23,13 @@ package me.xplabs.edit.view
 			elementsConrolView.init();
 			elementsConrolView.x = 800;
 			elementsConrolView.y = 20;
+			
+			addContextListener(MapResizeEvent.UPDATE_RESIZE, updateResizeHandler);
+		}
+		
+		private function updateResizeHandler(e:MapResizeEvent):void 
+		{
+			elementsConrolView.setXY(e.stageW - 200, -1);
 		}
 	}
 

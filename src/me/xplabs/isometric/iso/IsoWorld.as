@@ -17,14 +17,14 @@ package me.xplabs.isometric.iso
 	 */
 	public class IsoWorld implements IIsoWorld, IMapTileModel
 	{
-		private var _grid:Vector.<Vector.<IIsoTile>>;
+		private var _grid:Vector.<Vector.<IsoTile>>;
 		private var _tileW:int;
 		private var _tileH:int;
 		private var _layers:Dictionary;
 		private var _rows:int;
 		private var _cols:int;
 		private var _heuristicType:uint;
-		public function IsoWorld(rows:int, cols:int, grids:Vector.<Vector.<IIsoTile>>) 
+		public function IsoWorld(rows:int, cols:int, grids:Vector.<Vector.<IsoTile>>) 
 		{
 			worldSize(rows, cols);
 			_grid = grids;

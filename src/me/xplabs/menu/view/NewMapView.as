@@ -49,7 +49,7 @@ package me.xplabs.menu.view
 			_tiltleWindow.addElement(_widthLabel);
 			
 			_widthTextInput = new TextInput();
-			_widthTextInput.text = "输入文本";
+			_widthTextInput.text = "6144";
 			_widthTextInput.width = 100;
 			_widthTextInput.x = 60;
 			_widthTextInput.y = 29;
@@ -63,7 +63,7 @@ package me.xplabs.menu.view
 			_tiltleWindow.addElement(_heightLabel);
 			
 			_heightTextInput = new TextInput();
-			_heightTextInput.text = "输入文本2";
+			_heightTextInput.text = "3584";
 			_heightTextInput.width = 100;
 			_heightTextInput.x = 240;
 			_heightTextInput.y = 29;
@@ -106,7 +106,7 @@ package me.xplabs.menu.view
 		
 		private function ensureEnterHandler(e:MouseEvent):void 
 		{
-			if (clickEnsure != null) clickEnsure();
+			if (clickEnsure != null) clickEnsure(int(_widthTextInput.text), int(_heightTextInput.text));
 		}
 		
 		private function clickCloseHandler(e:CloseEvent):void 

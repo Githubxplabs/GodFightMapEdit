@@ -1,5 +1,7 @@
 package me.xplabs.menu.view 
 {
+	import flash.events.Event;
+	import flash.filesystem.File;
 	import flash.utils.Dictionary;
 	import me.xplabs.edit.events.EditEvent;
 	import me.xplabs.menu.events.MapMenuEvent;
@@ -18,6 +20,7 @@ package me.xplabs.menu.view
 		public var menuView:MenuView;
 		private var _functions:Dictionary;
 		private var _curClickType:String;
+		private var _file:File;
 		public function MenuViewMediator() 
 		{
 			super();
@@ -29,6 +32,13 @@ package me.xplabs.menu.view
 			super.onRegister();
 			_functions = new Dictionary();
 			menuView.itemClick = menuItemClickHandler;
+			_file = new File();
+			_file.addEventListener(Event.SELECT, fileSelectHandler);
+		}
+		
+		private function fileSelectHandler(e:Event):void 
+		{
+			trace("file成功");
 		}
 		
 		private function menuItemClickHandler(ptype:String):void 
@@ -50,6 +60,9 @@ package me.xplabs.menu.view
 					_functions[ptype] = false;
 					dispatch(new EditEvent(EditEvent.CLOSE_EDIT_MAP));
 					return;
+				case MapMenuEvent.IMPORT_BACKGROUND:
+					_file.browse();
+					break;
 				default:
 					dispatch(new MapMenuEvent(ptype));
 					return;
