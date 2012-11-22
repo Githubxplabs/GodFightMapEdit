@@ -2,23 +2,31 @@ package me.xplabs.edit.view
 {
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.geom.Point;
 	import flash.geom.Rectangle;
 	import me.xplabs.constant.MapConst;
 	import me.xplabs.interfaces.IViewStandard;
+	import mx.controls.Image;
+	import mx.core.Container;
+	import mx.core.UIComponent;
 	
 	/**
 	 * 背景层
 	 * ...
 	 * @author xiaohan
 	 */
-	public class BackGroundLayer extends Bitmap implements IViewStandard
+	public class BackGroundLayer extends Container implements IViewStandard
 	{
 		private var _bitmapData:BitmapData;
 		private var _rect:Rectangle;
+		private var _image:Image;
 		public function BackGroundLayer() 
 		{
 			super();
 			_rect = new Rectangle();
+			_image = new Image();
+			//addChild(_image);
+			addElement(_image);
 		}
 		
 		/* INTERFACE me.xplabs.interfaces.IViewStandard */
@@ -37,16 +45,17 @@ package me.xplabs.edit.view
 		private function updateBitmapData():void
 		{
 			if (!_bitmapData) return;
-			bitmapData.copyPixels(_bitmapData, _rect);
+			//_image.source.copyPixels(_bitmapData, _rect, new Point());
+			_image.source = _bitmapData;
 		}
-		override public function get bitmapData():BitmapData 
+		public function get bitmapData():BitmapData 
 		{
-			return super.bitmapData;
+			return _bitmapData;
 		}
 		
-		override public function set bitmapData(value:BitmapData):void 
+		public function set bitmapData(value:BitmapData):void 
 		{
-			_bitmapData = new BitmapData();
+			_bitmapData = value;
 			updateBitmapData();
 		}
 		

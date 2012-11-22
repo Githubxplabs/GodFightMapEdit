@@ -13,6 +13,9 @@ package me.xplabs.isometric.utils
 		private  var _sinAlpha:Number;
 		private  var _cosAlpha:Number;
 		private static var _instance:Isometric;
+		private var _tileWidth:Number;
+		private var _tileHeight:Number;
+		
 		public function Isometric() 
 		{
 			var theta:Number = 30;
@@ -23,6 +26,8 @@ package me.xplabs.isometric.utils
 			_cosTheta = Math.cos(theta);
 			_sinAlpha = Math.sin(alpha);
 			_cosAlpha = Math.cos(alpha);
+			_tileWidth = xyTo3d(64, 0).x;
+			_tileHeight = _tileWidth;
 		}
 		public static function get instance():Isometric
 		{
@@ -86,6 +91,124 @@ package me.xplabs.isometric.utils
 			pt2d.x = x * _cosAlpha + z * _sinAlpha;
 			pt2d.y = y * _cosTheta - (z * _cosAlpha - x * _sinAlpha) * _sinTheta;
 			return pt2d;
+		}
+		
+		/**
+		 * 通过格子坐标，获取矩阵坐标
+		 * @param	pos1
+		 * @param	pos2
+		 */
+		public function ptCellToMatrix(pos1:Point, pos2:Point = null):Point
+		{
+			if (!pos2) pos2 = new Point();
+			var x:Number = pos1.x - int((pos1.x - pos1.y + 1) * .5);
+			var y:Number = pos1.x - pos1.y;
+			pos2.x = x;
+			pos2.y = y;
+			return pos2;
+		}
+		
+		/**
+		 * 通过矩阵坐标获取格子坐标 
+		 * @param	pos1
+		 * @param	pos2
+		 * @return
+		 */
+		public function ptMatrixToCell(pos1:Point, pos2:Point = null):Point
+		{
+			if (!pos2) pos2 = new Point();
+			var x:Number = pos1.x + int((pos1.y + 1) * .5);
+			var y:Number = pos1.x - int(pos1.y * .5);
+			pos2.x = x;
+			pos2.y = y;
+			return pos2;
+		}
+		
+		
+		/**
+		 * 通过像素坐标获取格子矩阵坐标
+		 * @param	pos1
+		 * @param	pos2
+		 * @return
+		 */
+		public function ptPixelToMatrix(pos1:Point, pos2:Point = null):Point 
+		{
+			ptPixelToCell(pos1, pos2);
+			return ptCellToMatrix(pos2, pos2);
+		}
+		/**
+		 * 通过像素坐标，获取格子坐标
+		 * @param	pos1
+		 * @param	pos2
+		 * @return
+		 */
+		public function ptPixelToCell(pos1:Point, pos2:Point = null):Point 
+		{
+			if (!pos2) pos2 = new Point();
+			var coord:Point3D = ptTo3d(pos1);
+			var col:int = Math.floor(coord.x / _tileWidth);
+			var row:int = Math.floor(Math.abs(coord.z / _tileHeight));
+			pos2.x = col;
+			pos2.y = row;
+			return pos2;
+		}
+		/**
+		 * 通过格子坐标，获取矩阵坐标
+		 * @param	pos1
+		 * @param	pos2
+		 */
+		public function xyCellToMatrix(px:int, py:int):Point
+		{
+			var pos:Point = new Point();
+			var x:Number = px - int((px - py + 1) * .5);
+			var y:Number = px - py;
+			pos.x = x;
+			pos.y = y;
+			return pos;
+		}
+		
+		/**
+		 * 通过矩阵坐标获取格子坐标 
+		 * @param	pos1
+		 * @param	pos2
+		 * @return
+		 */
+		public function xyMatrixToCell(px:int, py:int):Point
+		{
+			var pos:Point = new Point();
+			var x:Number = px + int((py + 1) * .5);
+			var y:Number = px - int(py * .5);
+			pos.x = x;
+			pos.y = y;
+			return pos;
+		}
+		
+		/**
+		 * 通过像素坐标获取格子矩阵坐标
+		 * @param	pos1
+		 * @param	pos2
+		 * @return
+		 */
+		public function xyPixelToMatrix(px:int, py:int):Point 
+		{
+			var pos:Point = xyPixelToCell(px, py);
+			return ptPixelToMatrix(pos, pos);
+		}
+		/**
+		 * 通过像素坐标，获取格子坐标
+		 * @param	pos1
+		 * @param	pos2
+		 * @return
+		 */
+		public function xyPixelToCell(px:int, py:int):Point 
+		{
+			var pos:Point = new Point();
+			var coord:Point3D = xyTo3d(px, py);
+			var col:int = Math.floor(coord.x / _tileWidth);
+			var row:int = Math.floor(Math.abs(coord.z / _tileHeight));
+			pos.x = col;
+			pos.y = row;
+			return pos;
 		}
 	}
 }

@@ -7,7 +7,7 @@ package me.xplabs.edit.view
 	import me.xplabs.interfaces.IViewStandard;
 	import me.xplabs.utils.Utils;
 	import mx.containers.Panel;
-	//import spark.components.TitleWindow;
+	import spark.components.Image;
 	import mx.containers.TitleWindow;
 	import mx.containers.VBox;
 	import mx.controls.scrollClasses.ScrollBar;
@@ -25,7 +25,8 @@ package me.xplabs.edit.view
 		private var _titleWindow:TitleWindow;
 		private var _gridView:GridView;
 		
-		private var _backGroundLayer:Bitmap;
+		
+		private var _image:Image;
 		public function EditAreaView() 
 		{
 		}
@@ -36,22 +37,40 @@ package me.xplabs.edit.view
 			_titleWindow.width = 800;
 			_titleWindow.height = 550;
 			_titleWindow.title = "编辑区域";
+			_titleWindow.autoLayout = false;
 			addChild(_titleWindow);
+			
+			
+			_image = new Image();
+			_image.x = 0;
+			_image.y = 0;
+			_titleWindow.addElement(_image);
 			
 			var gridRect:Rectangle = Utils.pixelToGridRect(pw, ph);
 			_gridView = new GridView();
 			_gridView.width = gridRect.width;
 			_gridView.height = gridRect.height;
-			_gridView.init(gridRect);
+			_gridView.init(gridRect, pw, ph);
 			_titleWindow.addElement(_gridView);
+			_gridView.x = 0;
+			_gridView.y = 0;
 			
 			_titleWindow.verticalScrollPosition = gridRect.height * .5;
 			_titleWindow.horizontalScrollPosition = gridRect.width * .5;
-			
 		}
 		
 		public function setBitmapData(bitmapData:BitmapData):void
 		{
+			//_backGroundLayer.bitmapData = bitmapData;
+			_image.source = bitmapData;
+			_image.width = bitmapData.width;
+			_image.height = bitmapData.height;
+			_image.x = (_gridView.width - bitmapData.width) * .5;
+			_image.y = (_gridView.height - bitmapData.height) * .5;
+			//_image.x = 0;
+			//_image.y = 0;
+			_gridView.x = 0;
+			_gridView.y = 0;
 		}
 		
 		public function dispose():void
@@ -73,6 +92,16 @@ package me.xplabs.edit.view
 		public function setXY(px:int, py:int):void 
 		{
 			
+		}
+		
+		public function showGridHandler():void 
+		{
+			_gridView.visible = true;
+		}
+		
+		public function hideGridHandler():void 
+		{
+			_gridView.visible = false;
 		}
 	}
 

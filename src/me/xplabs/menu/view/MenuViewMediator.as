@@ -1,7 +1,12 @@
 package me.xplabs.menu.view 
 {
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
+	import flash.display.Loader;
+	import flash.display.LoaderInfo;
 	import flash.events.Event;
 	import flash.filesystem.File;
+	import flash.net.URLRequest;
 	import flash.utils.Dictionary;
 	import me.xplabs.edit.events.EditEvent;
 	import me.xplabs.menu.events.MapMenuEvent;
@@ -38,7 +43,17 @@ package me.xplabs.menu.view
 		
 		private function fileSelectHandler(e:Event):void 
 		{
-			trace("file成功");
+			var url:String = File(e.currentTarget).nativePath;
+			var loader:Loader = new Loader();
+			loader.contentLoaderInfo.addEventListener(Event.COMPLETE, loaderComplementHandler);
+			loader.load(new URLRequest(url));
+		}
+		
+		private function loaderComplementHandler(e:Event):void 
+		{
+			var event:EditEvent = new EditEvent(EditEvent.LOADER_BACKGROUND);
+			event.data = Bitmap(LoaderInfo(e.currentTarget).content).bitmapData;
+			dispatch(event);
 		}
 		
 		private function menuItemClickHandler(ptype:String):void 

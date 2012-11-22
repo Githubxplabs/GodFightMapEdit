@@ -41,7 +41,7 @@ package me.xplabs.menu.view
                         <menuitem label="导入地图" data="1C"/>
                         <menuitem label="导出地图" data="1D"/>
                         <menuitem label="导入背景" data="1E"/>
-                        <menuitem label="导出网格" data="1F"/>
+                        <!--<menuitem label="导出网格" data="1F"/>-->
                         <menuitem label="关闭地图" data="1G"/>
                     </menuitem>
 					<menuitem label="视图" data="top2">
