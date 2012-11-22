@@ -25,6 +25,7 @@ package me.xplabs.edit.view
 		private var _rows:int;
 		private var _cols:int;
 		private var _startX:int;
+		private var _startY:int;
 		private var _rowframe:int;
 		private var _colframe:int;
 		private var _totalframe:int;
@@ -50,17 +51,15 @@ package me.xplabs.edit.view
 			_cols = gridRect.y;
 			_tileWidth = Isometric.instance.xyTo3d(64, 0).x;
 			_tileHeight = _tileWidth;
-			_startX = gridRect.width * .5 - 32;
+			//_startX = gridRect.width * .5 - 32;
+			_startX = mapW * .5 - 32;
+			_startY = (gridRect.height * .5) - mapH * .5;
 			_colframe = 0;
 			_totalframe = Math.ceil(_rows / _gap);
 			addEventListener(Event.ENTER_FRAME, onEnterframe);
 
 			
-			//_graphics = Utils.getIsoDiamond();
-			
-			//var height:Number = gridRect.height * .5;
 			var tempRows:int = int(((gridRect.height * .5) - mapH * .5) / (MapConst.tileH * .5));
-			//var height2:Number = height - mapW * .5;
 			_left_up = new Point(0, tempRows);
 			Isometric.instance.ptCellToMatrix(_left_up, _left_up)
 			_right_down = new Point(gridRect.y, gridRect.y - tempRows);
@@ -120,7 +119,7 @@ package me.xplabs.edit.view
 					
 					var coord:Point = Isometric.instance.xyTo2d(tx, 0, tz);
 					t.x = _startX + coord.x;
-					t.y = coord.y;
+					t.y = -_startY + coord.y;
 					_grid[i][j] = t;
 					addChild(t);
 				}

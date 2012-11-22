@@ -48,29 +48,38 @@ package me.xplabs.edit.view
 			
 			var gridRect:Rectangle = Utils.pixelToGridRect(pw, ph);
 			_gridView = new GridView();
-			_gridView.width = gridRect.width;
-			_gridView.height = gridRect.height;
+			/*_gridView.width = gridRect.width;
+			_gridView.height = gridRect.height;*/
+			_gridView.width = pw;
+			_gridView.height = ph;
 			_gridView.init(gridRect, pw, ph);
 			_titleWindow.addElement(_gridView);
 			_gridView.x = 0;
 			_gridView.y = 0;
 			
-			_titleWindow.verticalScrollPosition = gridRect.height * .5;
-			_titleWindow.horizontalScrollPosition = gridRect.width * .5;
+			/*_titleWindow.horizontalScrollPosition = gridRect.width * .5;
+			 * _titleWindow.verticalScrollPosition = gridRect.height * .5;*/
+			_titleWindow.horizontalScrollPosition = pw * .5;
+			_titleWindow.verticalScrollPosition = ph * .5;
 		}
 		
 		public function setBitmapData(bitmapData:BitmapData):void
 		{
 			//_backGroundLayer.bitmapData = bitmapData;
+			if (_image.source && _image.source is BitmapData)
+			{
+				(_image.source as BitmapData).dispose();
+			}
 			_image.source = bitmapData;
 			_image.width = bitmapData.width;
 			_image.height = bitmapData.height;
-			_image.x = (_gridView.width - bitmapData.width) * .5;
-			_image.y = (_gridView.height - bitmapData.height) * .5;
-			//_image.x = 0;
-			//_image.y = 0;
+			/*_image.x = (_gridView.width - bitmapData.width) * .5;
+			_image.y = (_gridView.height - bitmapData.height) * .5;*/
+			_image.x = 0;
+			_image.y = 0;
 			_gridView.x = 0;
 			_gridView.y = 0;
+			trace(_gridView.width , _gridView.height, _image.width, _image.height);
 		}
 		
 		public function dispose():void

@@ -51,9 +51,16 @@ package me.xplabs.menu.view
 		
 		private function loaderComplementHandler(e:Event):void 
 		{
+			var loaderInfo:LoaderInfo = LoaderInfo(e.currentTarget);
+			loaderInfo.removeEventListener(Event.COMPLETE, loaderComplementHandler);
+			
 			var event:EditEvent = new EditEvent(EditEvent.LOADER_BACKGROUND);
-			event.data = Bitmap(LoaderInfo(e.currentTarget).content).bitmapData;
+			event.data = Bitmap(loaderInfo.content).bitmapData;
 			dispatch(event);
+			
+			loaderInfo.loader.unload();
+			loaderInfo.loader.unloadAndStop();
+			loaderInfo = null;
 		}
 		
 		private function menuItemClickHandler(ptype:String):void 
@@ -76,8 +83,14 @@ package me.xplabs.menu.view
 					dispatch(new EditEvent(EditEvent.CLOSE_EDIT_MAP));
 					return;
 				case MapMenuEvent.IMPORT_BACKGROUND:
-					_file.browse();
-					break;
+					if (!_functions[MapMenuEvent.NEW_MAP])
+					{
+						Alert.show("没创建地图，无法进行导入背景图片，请先新建地图！", "友情提示");
+					}else
+					{
+						_file.browse();
+					}
+					return;
 				default:
 					dispatch(new MapMenuEvent(ptype));
 					return;
