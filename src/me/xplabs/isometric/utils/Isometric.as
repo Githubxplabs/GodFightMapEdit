@@ -189,7 +189,7 @@ package me.xplabs.isometric.utils
 		 * @param	pos2
 		 * @return
 		 */
-		public function xyPixelToMatrix(px:int, py:int):Point 
+		public function xyPixelToMatrix(px:Number, py:Number):Point 
 		{
 			var pos:Point = xyPixelToCell(px, py);
 			return ptPixelToMatrix(pos, pos);
@@ -200,7 +200,7 @@ package me.xplabs.isometric.utils
 		 * @param	pos2
 		 * @return
 		 */
-		public function xyPixelToCell(px:int, py:int):Point 
+		public function xyPixelToCell(px:Number, py:Number):Point 
 		{
 			var pos:Point = new Point();
 			var coord:Point3D = xyTo3d(px, py);
@@ -209,6 +209,13 @@ package me.xplabs.isometric.utils
 			pos.x = col;
 			pos.y = row;
 			return pos;
+		}
+		
+		public function xyCellToPixel(px:int,py:int):Point
+		{
+			var d3X:Number = px * _tileWidth;
+			var d3Z:Number = -py * _tileHeight;
+			return xyTo2d(d3X, 0, d3Z);
 		}
 	}
 }

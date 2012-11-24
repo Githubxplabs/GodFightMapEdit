@@ -17,7 +17,7 @@ package me.xplabs.isometric.gemo
 		}
 		public function toString():String
 		{
-			return "(x=" + x + ","+"(y=" + y + ","+"(z=" + z + ")";
+			return "(x=" + x + ","+"y=" + y + ","+"z=" + z + ")";
 		}
 	}
 }
