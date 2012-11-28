@@ -5,6 +5,7 @@
 					   width="1000" height="600">
 	<fx:Script>
 		<![CDATA[
+			import com.greensock.events.LoaderEvent;
 			import flash.events.Event;
 			import flash.geom.Point;
 			import me.xplabs.isometric.utils.Isometric;
@@ -15,14 +16,16 @@
 
 				uiComponent.addChild(new MapEdit());
 				
-				
 				/*var gridView:GridView = new GridView();
 				uiComponent.addChild(gridView);
 				gridView.x = 100;
 				gridView.y = 100;*/
 				
-				
+			
 			}
+			
+			
+			
 		]]>
 	</fx:Script>
 	<fx:Declarations>

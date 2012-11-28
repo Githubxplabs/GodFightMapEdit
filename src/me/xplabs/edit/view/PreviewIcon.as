@@ -25,11 +25,20 @@ package me.xplabs.edit.view
 			_panel = new Panel();
 			_panel.width = 200;
 			_panel.height = 150;
+			_panel.title = "预览图";
 			addChild(_panel);
 			
 			_image = new Image();
-			_image.source = new BitmapData(50, 50, true, 0xff00ff00);
+			_image.width = 200;
+			_image.height = 120;
+			//_image.source = new BitmapData(50, 50, true, 0xff00ff00);
 			_panel.addElement(_image);
+		}
+		
+		public function changeImage(bitmapData:BitmapData):void
+		{
+			_image.source = bitmapData;
+			//_panel.title = "预览图";
 		}
 		
 	}

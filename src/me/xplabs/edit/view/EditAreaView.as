@@ -27,6 +27,7 @@ package me.xplabs.edit.view
 		
 		
 		private var _image:Image;
+		
 		public function EditAreaView() 
 		{
 		}

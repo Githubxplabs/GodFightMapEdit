@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009"
+		   xmlns:s="library://ns.adobe.com/flex/spark"
+		   xmlns:mx="library://ns.adobe.com/flex/mx"
+		   width="600"
+		   layout="absolute"
+		   creationComplete="initLib()">
+	<fx:Declarations>
+		<!-- 将非可视元素（例如服务、值对象）放在此处 -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import me.xplabs.interfaces.IResLibrary;
+			import me.xplabs.interfaces.IResName;
+			import mx.controls.TileList;
+			import spark.components.DropDownList;
+			import mx.collections.ArrayCollection;
+			import spark.components.Group;
+			import spark.components.Image;
+			import spark.components.Scroller;
+			import spark.components.TileGroup;
+			import spark.events.IndexChangeEvent;
+			import mx.collections.ArrayCollection;
+			
+			
+			private var _previewIcon:PreviewIcon;
+			private var _dropDownList:DropDownList;
+			//private var _tileList:TileList;
+			//private var _tileGroup:TileGroup;
+
+			
+			private var _images:Vector.<Image>;
+			
+			public var resLibrary:IResLibrary;
+			public var resName:IResName;
+			
+			//private var _group:Group;
+			
+			//private var _scroller:Scroller;
+			
+			
+			public function init():void
+			{
+				_previewIcon = new PreviewIcon();
+				addChild(_previewIcon);
+				
+				_dropDownList = new DropDownList();
+				_dropDownList.y = 150;
+				_dropDownList.width = 200;
+				_dropDownList.height = 20;
+				_dropDownList.selectedIndex = 0;
+				_dropDownList.labelField = "label";
+				_dropDownList.dataProvider = new ArrayCollection([ /*{label:"草地", data:"grass"}, */ /*{label:"建筑", data:"build"}, */{label: "树木", data: "tree"}, {label: "石头", data: "stone"},]);
+				addChild(_dropDownList);
+				
+				_dropDownList.addEventListener(IndexChangeEvent.CHANGE, dropDownListChangeHandler);
+				
+				/*_container = new Group();
+				   addChild(_container);
+				   _container.width = 200;
+				   _container.height = 390;
+				   _container.setContentSize(200,390);
+				   _container.autoLayout = false;
+				 _container.y = 170;*/
+				
+				/*var image:Image = new Image();
+				
+				   var shape:Shape = new Shape();
+				   shape.graphics.beginFill(0xff00ff);
+				   shape.graphics.drawRect(0, 0, 2000, 2000);
+				   shape.graphics.endFill();
+				   image.source = shape;
+				   image.width = 2000;
+				   image.height = 2000;
+				   _container.addElement(image);
+				
+				   _container.horizontalScrollPosition = 10;
+				 _container.verticalScrollPosition = 10;*/
+				
+				/*_group = new Group();
+				   _group.width = 2000;
+				   _group.height = 3900;
+				   _group.clipAndEnableScrolling = true;
+				   _group.setContentSize(2000, 3900);
+				
+				
+				   _tileGroup = new TileGroup();
+				   _tileGroup.width = 2000;
+				   _tileGroup.height = 3900;
+				   _tileGroup.autoLayout = false;
+				   //_group.addElement(_tileGroup);
+				   //_tileGroup.horizontalGap = 100;
+				   //_tileGroup.verticalGap = 100;
+				   //_tileGroup.requestedColumnCount = 2;
+				   //_tileGroup.requestedRowCount = 2;
+				   _scroller = new Scroller();
+				   _scroller.width = 200;
+				   _scroller.width = 390;
+				   addChild(_scroller);
+				   _scroller.viewport = _group;
+				   //addChild(_tileGroup);
+				   //_scroller.measuredSizeIncludesScrollBars  = true;
+				
+				 _images = new Vector.<Image>();*/
+				
+				/*var image:Image = new Image();
+				   image.source = new phone2();
+				   var image1:Image = new Image();
+				   image1.source = new phone2();
+				   var image2:Image = new Image();
+				   image2.source = new phone2();
+				   var image3:Image = new Image();
+				   image3.source = new phone2();
+				   _tileGroup.addElement(image);
+				   _tileGroup.addElement(image1);
+				   _tileGroup.addElement(image2);
+				   _tileGroup.addElement(image3);
+				
+				   _images.push(image);
+				   _images.push(image1);
+				   _images.push(image2);
+				 _images.push(image3);*/
+				
+				//_tileGroup.addEventListener(MouseEvent.MOUSE_MOVE, tileMouseMoveHandler);
+				 _images = new Vector.<Image>();
+				updateRes("tree");
+			}
+			
+			private function updateRes(pkey:String):void
+			{
+				
+				var len:int = _images.length;
+				for (var j:int = 0; j < len; j++)
+				{
+					_images[i].source = null;
+				}
+				_images.length = 0;
+				_tileGroup.removeAllElements();
+				
+				var tempResNames:Vector.<String> = resName.getResName(pkey);
+				len = tempResNames.length;
+				//_tileGroup.width = 200;
+				//_tileGroup.height = int(len / 2) * 100;
+				//_tileGroup.setContentSize(200, 1000);
+				for (var i:int = 0; i < len; i++)
+				{
+					var image:Image = new Image();
+					image.width = 100;
+					image.height = 100;
+					image.x = (i % 2) * 100;
+					image.y = int(i / 2) * 100;
+					image.source = resLibrary.getResObj(pkey + "." + tempResNames[i]);
+					_tileGroup.addElement(image);
+						//_container.addChild(image);
+				}
+			}
+			
+			/* INTERFACE me.xplabs.interfaces.IViewStandard */
+			
+			public function setWH(pw:int, ph:int):void
+			{
+			
+			}
+			
+			public function setXY(px:int, py:int):void
+			{
+				if (px != -1)
+					this.x = px;
+				if (py != -1)
+					this.y = py;
+			}
+			
+			private function dropDownListChangeHandler(e:Event):void
+			{
+				//trace(e.currentTarget);
+				updateRes(_dropDownList.selectedItem.data);
+			}
+			
+			private function updateResouce(ptype:int):void
+			{
+			
+			}
+			
+			private function tileMouseMoveHandler(e:MouseEvent):void
+			{
+				var row:int = e.localX / 100;
+				var col:int = e.localY / 100;
+				
+				var tempIndex:int = col * 2 + row;
+				if (tempIndex >= _images.length)
+					return;
+			
+			}
+			
+			public function initLib():void
+			{
+			}
+		]]>
+	</fx:Script>
+	<s:TileGroup id="_tileGroup" width="200" height="390"></s:TileGroup>
+</mx:Module>

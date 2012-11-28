@@ -1,20 +1,18 @@
-package me.xplabs.edit.view 
+package me.xplabs.edit.view
 {
-	import flash.display.Bitmap;
 	import flash.display.BitmapData;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
+	import flash.filters.GlowFilter;
+	import me.xplabs.interfaces.IImageRes;
+	import me.xplabs.interfaces.IResLibrary;
+	import me.xplabs.interfaces.IResName;
 	import me.xplabs.interfaces.IViewStandard;
 	import mx.collections.ArrayCollection;
-	import mx.collections.ArrayList;
-	import mx.collections.XMLListCollection;
-	import mx.containers.VBox;
-	import mx.controls.TileList;
+	import mx.core.Container;
 	import mx.core.UIComponent;
-	import mx.events.ListEvent;
-	import spark.components.ComboBox;
 	import spark.components.DropDownList;
 	import spark.components.Image;
-	import spark.components.TileGroup;
 	import spark.events.IndexChangeEvent;
 	
 	/**
@@ -25,19 +23,23 @@ package me.xplabs.edit.view
 	{
 		private var _previewIcon:PreviewIcon;
 		private var _dropDownList:DropDownList;
-		private var _tileList:TileList;
-		private var _tileGroup:TileGroup;
-		[Embed(source = "../../../../assets/mouse/blueHand.png")]
-		public const phone2:Class;
-
+		private var _images:Vector.<ImageRes>;
+		public var resLibrary:IResLibrary;
+		public var resName:IResName;
+		private var _box:Container;
+		private var _filters:Array;
 		
-		private var _images:Vector.<Image>;
-		public function ElementsControlView() 
+		public var imageClick:Function;
+		
+		public function ElementsControlView()
 		{
 			super();
 		}
+		
 		public function init():void
 		{
+			
+			_filters = [new GlowFilter(0xDB06F9, 1, 6, 6, 4, 1)];
 			_previewIcon = new PreviewIcon();
 			addChild(_previewIcon);
 			
@@ -47,96 +49,107 @@ package me.xplabs.edit.view
 			_dropDownList.height = 20;
 			_dropDownList.selectedIndex = 0;
 			_dropDownList.labelField = "label";
-			_dropDownList.dataProvider = new ArrayCollection([
-					{label:"草地", data:"1A"}, 
-                    {label:"建筑", data:"1B"}, 
-                    {label:"树木", data:"1C"}, 
-                ]);
+			_dropDownList.dataProvider = new ArrayCollection([ /*{label:"草地", data:"grass"}, */ /*{label:"建筑", data:"build"}, */{label: "树木", data: "tree"}, {label: "石头", data: "stone"},]);
 			addChild(_dropDownList);
 			
 			_dropDownList.addEventListener(IndexChangeEvent.CHANGE, dropDownListChangeHandler);
 			
+			_box = new Container();
+			_box.width = 200;
+			_box.height = 390;
+			_box.y = 170;
+			_box.autoLayout = false;
+			addChild(_box);
+			_images = new Vector.<ImageRes>();
+			updateRes("tree");
+		}
+		
+		private function updateRes(pkey:String):void
+		{
+			var len:int = _images.length;
+			for (var j:int = 0; j < len; j++)
+			{
+				_images[i].source = null;
+				_images[i].removeEventListener(MouseEvent.CLICK, imageClickHandler);
+				_images[i].removeEventListener(MouseEvent.MOUSE_OVER, imageOverHandler);
+				_images[i].removeEventListener(MouseEvent.MOUSE_OUT, imageOutHandler);
+			}
+			_images.length = 0;
+			_box.removeAllElements();
 			
-			_tileGroup = new TileGroup();
-			_tileGroup.width = 200;
-			_tileGroup.height = 390;
-			_tileGroup.y = 170;
-			_tileGroup.horizontalGap = 100;
-			_tileGroup.verticalGap = 100;
-			//_tileGroup.requestedColumnCount = 2;
-			addChild(_tileGroup);
-			
-			_images = new Vector.<Image>();
-			
-			var image:Image = new Image();
-			image.source = new phone2();
-			var image1:Image = new Image();
-			image1.source = new phone2();
-			var image2:Image = new Image();
-			image2.source = new phone2();
-			var image3:Image = new Image();
-			image3.source = new phone2();
-			_tileGroup.addElement(image);
-			_tileGroup.addElement(image1);
-			_tileGroup.addElement(image2);
-			_tileGroup.addElement(image3);
-			
-			_images.push(image);
-			_images.push(image1);
-			_images.push(image2);
-			_images.push(image3);
-
-			_tileGroup.addEventListener(MouseEvent.MOUSE_MOVE, tileMouseMoveHandler);
-			
-			
+			var tempResNames:Vector.<String> = resName.getResName(pkey);
+			len = tempResNames.length;
+			for (var i:int = 0; i < len; i++)
+			{
+				var image:ImageRes = new ImageRes();
+				image.width = 90;
+				image.height = 100;
+				image.x = (i % 2) * 90;
+				image.y = int(i / 2) * 100;
+				image.resName = pkey + "." + tempResNames[i];
+				image.source = resLibrary.getResObj(pkey + "." + tempResNames[i]);
+				image.addEventListener(MouseEvent.CLICK, imageClickHandler);
+				image.addEventListener(MouseEvent.MOUSE_OVER, imageOverHandler);
+				image.addEventListener(MouseEvent.MOUSE_OUT, imageOutHandler);
+				_box.addElement(image);
+				//trace(image.id,image.uid);
+			}
+		}
+		
+		private function imageOverHandler(e:MouseEvent):void
+		{
+			e.currentTarget.filters = _filters;
+		}
+		private function imageOutHandler(e:MouseEvent):void
+		{
+			e.currentTarget.filters = [];
+		}
+		
+		private function imageClickHandler(e:MouseEvent):void
+		{
+			if (imageClick != null) imageClick(IImageRes(e.currentTarget));
+			changeImage(ImageRes(e.currentTarget).bitmapData);
+			//trace("鼠标点击");
+		}
+		public function changeImage(bitmapData:BitmapData):void
+		{
+			_previewIcon.changeImage(bitmapData);
 		}
 		
 		/* INTERFACE me.xplabs.interfaces.IViewStandard */
 		
-		public function setWH(pw:int, ph:int):void 
+		public function setWH(pw:int, ph:int):void
 		{
-			
+			_box.height = ph - 170;
 		}
 		
-		public function setXY(px:int, py:int):void 
+		public function setXY(px:int, py:int):void
 		{
-			if (px != -1) this.x = px;
-			if (py != -1) this.y = py;
+			if (px != -1)
+				this.x = px;
+			if (py != -1)
+				this.y = py;
 		}
 		
-		private function dropDownListChangeHandler(e:IndexChangeEvent):void 
+		private function dropDownListChangeHandler(e:Event):void
 		{
-			trace(e.newIndex);
-			
+			updateRes(_dropDownList.selectedItem.data);
 		}
-		
 		
 		private function updateResouce(ptype:int):void
 		{
-			
+		
 		}
 		
-		private function tileMouseMoveHandler(e:MouseEvent):void 
+		private function tileMouseMoveHandler(e:MouseEvent):void
 		{
 			var row:int = e.localX / 100;
 			var col:int = e.localY / 100;
 			
 			var tempIndex:int = col * 2 + row;
-			if (tempIndex >= _images.length) return;
-			
-			
-		}
+			if (tempIndex >= _images.length)
+				return;
 		
-		private function onItemClick(e:ListEvent):void 
-		{
-			trace("点击");
 		}
-		
-		private function onChange(e:ListEvent):void 
-		{
-			trace("切换");
-		}
-		
 	}
-
 }

@@ -16,6 +16,7 @@ package me.xplabs.edit.events
 		 * 导入背景图片成功
 		 */
 		public static const LOADER_BACKGROUND:String = "EditEvent.LOADER_BACKGROUND";
+		
 		public var data:Object;
 		public function EditEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false) 
 		{
